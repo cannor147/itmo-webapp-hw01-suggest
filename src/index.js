@@ -105,6 +105,20 @@ function setupSuggest($field) {
     selectFormSuggestItem(index - 1);
   };
 
+  const fetcher = function(term) {
+    if (term.length === 0) {
+      $suggestList.load([]);
+    } else {
+      const apiUrl = `https://autocomplete.travelpayouts.com/places2?term=${term}&types[]=city&types[]=airport&max=10&locale=uk`;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .catch(error => console.error(`Error while getting API response: ${error}`))
+        .then(json => $suggestList.load(json.map(parseSuggestItem)));
+    }
+  };
+  const debouncedFetcher = debounce(fetcher, 200, false);
+
   $clear.hide = hide.bind($clear);
   $clear.show = show.bind($clear);
   $suggestList.hide = hide.bind($suggestList);
@@ -132,6 +146,8 @@ function setupSuggest($field) {
         if (e.target.className !== SUGGEST_ITEM_COPY_CLASS) {
           currentSuggestItemValue = $input.value;
           $suggestList.clear();
+        } else {
+          debouncedFetcher($input.value);
         }
         $input.focus();
       });
@@ -146,20 +162,6 @@ function setupSuggest($field) {
     };
   };
   document.addEventListener('DOMContentLoaded', function() {
-    const fetcher = function(term) {
-      if (term.length === 0) {
-        $suggestList.load([]);
-      } else {
-        const apiUrl = `https://autocomplete.travelpayouts.com/places2?term=${term}&types[]=city&types[]=airport&max=10&locale=uk`;
-
-        fetch(apiUrl)
-          .then(response => response.json())
-          .catch(error => console.error(`Error while getting API response: ${error}`))
-          .then(json => $suggestList.load(json.map(parseSuggestItem)));
-      }
-    };
-    const debouncedFetcher = debounce(fetcher, 200, false);
-
     $input.addEventListener('input', () => {
       debouncedFetcher($input.value);
       if ($input.value === '') {
@@ -181,7 +183,7 @@ function setupSuggest($field) {
         selectNextFormSuggestItem();
         e.preventDefault();
       } else if (e.keyCode === 13 && currentSuggestItemIndex !== -1 && active) {
-        $suggestList.clear();
+        debouncedFetcher($input.value);
         currentSuggestItemValue = $input.value;
         e.preventDefault();
       }
