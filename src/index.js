@@ -150,7 +150,7 @@ function setupSuggest($field) {
       if (term.length === 0) {
         $suggestList.load([]);
       } else {
-        const apiUrl = `http://autocomplete.travelpayouts.com/places2?term=${term}&types[]=city&types[]=airport&max=10&locale=uk`;
+        const apiUrl = `https://autocomplete.travelpayouts.com/places2?term=${term}&types[]=city&types[]=airport&max=10&locale=uk`;
 
         fetch(apiUrl)
           .then(response => response.json())
