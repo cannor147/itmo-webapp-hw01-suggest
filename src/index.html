@@ -1,12 +1,34 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
   <head>
     <meta charset="utf-8">
     <title>Задача «Саджест»</title>
     <link rel="stylesheet" href="index.css">
   </head>
-  <body>
-    <!-- TODO -->
+  <body class="site">
+    <header class="site__header">
+      <h1 class="site__title">Пошук дешевих авіаквитків</h1>
+    </header>
+    <main class="site__content">
+      <form class="air-ticket-form">
+        <div id="from-place-field" class="air-ticket-form__field">
+          <label for="from-place" class="air-ticket-form__field-label">
+            <input id="from-place" name="from-place"
+                   class="air-ticket-form__field-input" placeholder="Звідки"/>
+          </label>
+          <ul class="air-ticket-form__field-suggest"></ul>
+          <span class="air-ticket-form__field-clear-button" role="button" title="Очистити"></span>
+        </div>
+        <div id="to-place-field" class="air-ticket-form__field">
+          <label for="to-place" class="air-ticket-form__field-label">
+            <input id="to-place" name="from-place"
+                   class="air-ticket-form__field-input" placeholder="Куди"/>
+          </label>
+          <ul class="air-ticket-form__field-suggest"></ul>
+          <span class="air-ticket-form__field-clear-button" role="button" title="Очистити"></span>
+        </div>
+      </form>
+    </main>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>

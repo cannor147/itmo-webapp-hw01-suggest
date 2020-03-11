@@ -1,1 +1,152 @@
-/* TODO */
+:root {
+  --yellow: rgba(255, 214, 0, 1);
+  --yellow-transparent: rgba(255, 214, 0, 0.5);
+  --blue: rgba(0, 91, 188, 1);
+  --blue-transparent: rgba(0, 91, 188, 0.5);
+  --white: rgba(255, 255, 255, 1);
+}
+
+.site {
+  margin: 0 auto;
+
+  background: url('flag.jpg') no-repeat fixed center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: var(--white);
+  font-size: 2rem;
+}
+.site__title {
+  display: block;
+
+  margin: 0;
+
+  color: var(--yellow);
+  text-align: center;
+}
+.site__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.air-ticket-form {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 72rem;
+  margin: 120px auto 0;
+}
+.air-ticket-form__field {
+  position: relative;
+}
+.air-ticket-form__field-label {
+  font-weight: 200;
+}
+.air-ticket-form__field-input {
+  width: 30rem;
+  padding: 2px 10px;
+
+  border: 0;
+
+  background-color: var(--yellow-transparent);
+  color: var(--white);
+  font-size: 2rem;
+  font-weight: 100;
+}
+.air-ticket-form__field-input:active,
+.air-ticket-form__field-input:focus {
+  outline-color: var(--yellow);
+  outline-width: thick;
+}
+.air-ticket-form__field-input::placeholder {
+  color: var(--yellow);
+}
+
+.air-ticket-form__field-suggest {
+  position: absolute;
+
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
+.air-ticket-form__field-suggest-item {
+  display: block;
+
+  width: 36rem;
+  margin: 2px 0 0;
+  padding: 0.1rem 2rem;
+
+  background-color: var(--yellow-transparent);
+}
+.air-ticket-form__field-suggest-item_active {
+  display: block;
+
+  width: 36rem;
+  margin: 2px 0 0;
+  padding: 0.1rem 2rem;
+
+  background-color: var(--blue-transparent);
+}
+.air-ticket-form__field-suggest-item-country {
+  margin-left: 0.5rem;
+
+  font-size: 1rem;
+}
+.air-ticket-form__field-suggest-item-country::after {
+  content: ', ';
+}
+.air-ticket-form__field-suggest-item-code {
+  font-size: 1rem;
+}
+.air-ticket-form__field-suggest-item-copy {
+  position: absolute;
+  right: 1rem;
+
+  transform: rotateZ(135deg);
+}
+.air-ticket-form__field-suggest-item-copy:hover {
+  cursor: pointer;
+}
+
+.air-ticket-form__field-clear-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 2rem;
+  height: 2rem;
+
+  border: 4px solid var(--yellow);
+  border-radius: 50%;
+
+  transform: scale(0.5) translateX(-0.5rem);
+
+  background-color: var(--yellow);
+}
+.air-ticket-form__field-clear-button:hover {
+  cursor: pointer;
+}
+.air-ticket-form__field-clear-button:before,
+.air-ticket-form__field-clear-button:after {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.9rem;
+
+  width: 0.3rem;
+  height: 1.6rem;
+
+  background-color: var(--blue);
+  content: ' ';
+}
+.air-ticket-form__field-clear-button:before {
+  transform: rotate(45deg);
+}
+.air-ticket-form__field-clear-button:after {
+  transform: rotate(-45deg);
+}
