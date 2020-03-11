@@ -105,6 +105,13 @@ function setupSuggest($field) {
     selectFormSuggestItem(index - 1);
   };
 
+  const parseSuggestItem = function(json) {
+    return {
+      city: json.name,
+      country: json.country_name,
+      code: json.code
+    };
+  };
   const fetcher = function(term) {
     if (term.length === 0) {
       $suggestList.load([]);
@@ -154,13 +161,6 @@ function setupSuggest($field) {
     }
   };
 
-  const parseSuggestItem = function(json) {
-    return {
-      city: json.name,
-      country: json.country_name,
-      code: json.code
-    };
-  };
   document.addEventListener('DOMContentLoaded', function() {
     $input.addEventListener('input', () => {
       debouncedFetcher($input.value);
@@ -183,7 +183,11 @@ function setupSuggest($field) {
         selectNextFormSuggestItem();
         e.preventDefault();
       } else if (e.keyCode === 13 && currentSuggestItemIndex !== -1 && active) {
-        debouncedFetcher($input.value);
+        if (e.shiftKey) {
+          debouncedFetcher($input.value);
+        } else {
+          $suggestList.clear();
+        }
         currentSuggestItemValue = $input.value;
         e.preventDefault();
       }
