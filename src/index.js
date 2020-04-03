@@ -37,15 +37,15 @@ function createSpan(text, className) {
 function findParent($element, classNames) {
   if ($element === null) {
     return null;
-  } else {
-    for (const className of classNames) {
-      if ($element.className === className) {
-        return $element;
-      }
-    }
-
-    return findParent($element.parentElement, classNames);
   }
+
+  for (const className of classNames) {
+    if ($element.className === className) {
+      return $element;
+    }
+  }
+
+  return findParent($element.parentElement, classNames);
 }
 function hide() {
   this.style.display = 'none';
