@@ -120,8 +120,9 @@ function setupSuggest($field) {
 
       fetch(apiUrl)
         .then(response => response.json())
-        .catch(error => console.error(`Error while getting API response: ${error}`))
-        .then(json => $suggestList.load(json.map(parseSuggestItem)));
+        .catch(error => console.error(`Error while getting API response: ${apiUrl}, ${error}`))
+        .then(json => $suggestList.load(json.map(parseSuggestItem)))
+        .catch(error => console.error(`Error while parsing data from API: ${apiUrl}, ${error}`));
     }
   };
   const debouncedFetcher = debounce(fetcher, 200, false);
