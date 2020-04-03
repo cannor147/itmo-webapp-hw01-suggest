@@ -177,20 +177,26 @@ function setupSuggest($field) {
       $input.value = '';
     });
     $input.addEventListener('keydown', e => {
-      if (e.keyCode === 38) {
-        selectPreviousFormSuggestItem();
-        e.preventDefault();
-      } else if (e.keyCode === 40) {
-        selectNextFormSuggestItem();
-        e.preventDefault();
-      } else if (e.keyCode === 13 && currentSuggestItemIndex !== -1 && active) {
-        if (e.shiftKey) {
-          debouncedFetcher($input.value);
-        } else {
-          $suggestList.clear();
-        }
-        currentSuggestItemValue = $input.value;
-        e.preventDefault();
+      switch (e.keyCode) {
+        case 13:
+          if (currentSuggestItemIndex !== -1 && active) {
+            if (e.shiftKey) {
+              debouncedFetcher($input.value);
+            } else {
+              $suggestList.clear();
+            }
+            currentSuggestItemValue = $input.value;
+            e.preventDefault();
+          }
+          break;
+        case 38:
+          selectPreviousFormSuggestItem();
+          e.preventDefault();
+          break;
+        case 40:
+          selectNextFormSuggestItem();
+          e.preventDefault();
+          break;
       }
     });
     $input.addEventListener('focusin', () => {
