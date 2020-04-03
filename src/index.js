@@ -32,6 +32,19 @@ function createSpan(text, className) {
 
   return $span;
 }
+function findParent($element, classNames) {
+  if ($element === null) {
+    return null;
+  } else {
+    for (const className of classNames) {
+      if ($element.className === className) {
+        return $element;
+      }
+    }
+
+    return findParent($element.parentElement, classNames);
+  }
+}
 function hide() {
   this.style.display = 'none';
 }
@@ -138,29 +151,37 @@ function setupSuggest($field) {
 
     for (const suggestItem of suggestItems) {
       const $suggestItem = document.createElement('li');
+
       $suggestItem.appendChild(createSpan(suggestItem.city, SUGGEST_ITEM_CITY_CLASS));
       $suggestItem.appendChild(createSpan(suggestItem.country, SUGGEST_ITEM_COUNTRY_CLASS));
       $suggestItem.appendChild(createSpan(suggestItem.code, SUGGEST_ITEM_CODE_CLASS));
       $suggestItem.appendChild(createSpan('✈', SUGGEST_ITEM_COPY_CLASS));
       $suggestItem.className = SUGGEST_ITEM_CLASS;
-
       this.appendChild($suggestItem);
-      $suggestItem.addEventListener('mouseenter', () => {
-        setFormSuggestItem(Array.from(this.children).indexOf($suggestItem));
-      });
-      $suggestItem.addEventListener('click', e => {
-        selectFormSuggestItem(Array.from(this.children).indexOf($suggestItem));
-
-        if (e.target.className !== SUGGEST_ITEM_COPY_CLASS) {
-          currentSuggestItemValue = $input.value;
-          $suggestList.clear();
-        } else {
-          debouncedFetcher($input.value);
-        }
-        $input.focus();
-      });
     }
   };
+  $suggestList.addEventListener('mouseover', e => {
+    const $suggestItem = findParent(e.target, [SUGGEST_ITEM_CLASS, ACTIVE_SUGGEST_ITEM_CLASS]);
+
+    if ($suggestItem) {
+      setFormSuggestItem(Array.from($suggestList.children).indexOf($suggestItem));
+    }
+  });
+  $suggestList.addEventListener('click', e => {
+    const $suggestItem = findParent(e.target, [SUGGEST_ITEM_CLASS, ACTIVE_SUGGEST_ITEM_CLASS]);
+
+    if ($suggestItem) {
+      selectFormSuggestItem(Array.from($suggestList.children).indexOf($suggestItem));
+
+      if (e.target.className !== SUGGEST_ITEM_COPY_CLASS) {
+        currentSuggestItemValue = $input.value;
+        $suggestList.clear();
+      } else {
+        debouncedFetcher($input.value);
+      }
+      $input.focus();
+    }
+  });
 
   document.addEventListener('DOMContentLoaded', function() {
     $input.addEventListener('input', () => {
