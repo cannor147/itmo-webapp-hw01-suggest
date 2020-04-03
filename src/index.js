@@ -12,6 +12,8 @@ const SUGGEST_ITEM_COUNTRY_CLASS = 'air-ticket-form__field-suggest-item-country'
 const SUGGEST_ITEM_CODE_CLASS = 'air-ticket-form__field-suggest-item-code';
 const SUGGEST_ITEM_COPY_CLASS = 'air-ticket-form__field-suggest-item-copy';
 
+const FETCH_INTERVAL = 200;
+
 function debounce(callback, interval) {
   let timer = null;
 
@@ -138,7 +140,7 @@ function setupSuggest($field) {
         .catch(error => console.error(`Error while parsing data from API: ${apiUrl}, ${error}`));
     }
   };
-  const debouncedFetcher = debounce(fetcher, 200, false);
+  const debouncedFetcher = debounce(fetcher, FETCH_INTERVAL, false);
 
   $clear.hide = hide.bind($clear);
   $clear.show = show.bind($clear);
